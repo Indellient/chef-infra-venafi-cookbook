@@ -1,13 +1,17 @@
 include_recipe 'venafi-helper::default'
 
-venafihelper 'https://082719192.dev.lab.venafi.com' do
-    tpp_username 'username'
-    tpp_password 'password'
-    policyname   'policyname'
-    commonname   'commoname'
-    location     '/etc/venafi'
-    devicename   'devicename'  
-    action :run
+venafihelper node['venafi-helper-nginx']['common_name'] do
+  tpp_username     node['venafi-helper-nginx']['username']
+  tpp_password     node['venafi-helper-nginx']['password']
+  tpp_url          node['venafi-helper-nginx']['url']
+  apikey           node['venafi-helper-nginx']['apikey']
+  zone             node['venafi-helper-nginx']['zone']
+  location         node['venafi-helper-nginx']['location']
+  app_name         node['venafi-helper-nginx']['app_name']
+  app_info         node['venafi-helper-nginx']['app_info']
+  tls_address      node['venafi-helper-nginx']['tls_address']
+  renew_threshold  node['venafi-helper-nginx']['renew_threshold']
+  action :run
 end
 
 if platform_family?('rhel')
@@ -25,8 +29,8 @@ end
 template "/etc/nginx/nginx.conf" do
      source "nginx.conf.erb"
      variables(
-        :sslcertificate => "/etc/venafi/orange.example.com.cert",
-        :sslkey => "/etc/venafi/orange.example.com.key",
+      :sslcertificate => "/etc/venafi/#{node['venafi-helper-nginx']['common_name']}.cert",
+      :sslkey => "/etc/venafi/#{node['venafi-helper-nginx']['common_name']}.key",
      )
 end
 

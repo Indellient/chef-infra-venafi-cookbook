@@ -1,32 +1,27 @@
-# venafi-helper
+# Venafi Helper Cookbook
 
 ### Description
-This is a venafi cookbook whuck will connect with an existing TPP (Trust Protection Platform) Venafi Server and enroll and manage your certs. 
 
-In order to use the venafi-helper you need to port the custim resource and call it from your default recipe. 
+This is a venafi cookbook which will connect with an existing TPP (Trust Protection Platform) Venafi Server or Venafi Cloud, and enroll and manage your certs. 
 
-in order to use the venafi-helper, you also need to install the ruby gem `vcert`
+In order to use the venafi-helper you need to utilize the custom resource and call it from your recipes. 
 
-### Configuring the venafi-helper
-| Configuration     | Description                                                                           |
-|-------------------|---------------------------------------------------------------------------------------|
-|`tpp_username`     | The username you use to authenticate with the SDK                                     |
-|`tpp_password`     | The password you use to authenticate with the SDK                                     |
-|`policyname`       | The zone of your certificate (e.g. "Certificates\\\\Bla").                            |
-|`commonname`       | The common name of your certificate (e.g. "bla.example.com").                         |
-|`location`         | Where you want to write the certificates to disk                                      |
-|`devicename`       | Name of Device you want to create in Venafi Server                                    |
+### venafihelper Properties
 
-In your default recipe you would call the venafi-helper custom resource and set the configuration as such: 
+- `common_name`: The common name of your certificate (e.g. "bla.example.com")
+  - name property
+- `tpp_url`: The URL you use to authenticate with the SDK
+- `tpp_username`: The username you use to authenticate with the SDK
+- `tpp_password`: The password you use to authenticate with the SDK
+- `zone`: The zone of your certificate (e.g. "Certificates\\\\Bla")
+- `location`: Where you want to write the certificates to disk
+- `device_name`: Name of Device you want to create in Venafi Server
+  - default: node FQDN
+- `app_name`:
+- `apikey`: API used to communicate with Venafi Cloud
+- `id_path`:
+- `app_info`:
+- `tls_address`:
+- `renew_threshold`:
 
-```
-venafi-helper 'tpp_url' do
-    tpp_username 'tppusername'
-    tpp_password 'tpppassword'
-    policyname   'Policyname'
-    commonname   'commonname'
-    location     'location'
-    devicename   'devicename'
-    action :run
-end
-```
+For examples please see the test fixtures in the `test/` directory.

@@ -1,15 +1,5 @@
 include_recipe 'venafi-helper::default'
 
-# venafihelper 'https://082719192.dev.lab.venafi.com' do
-#     tpp_username 'indellient_user'
-#     tpp_password '4X%x8R6aG@N4AW&'
-#     policyname   'Venafi Partners\Indellient\Habitat'
-#     commonname   'test.example.com'
-#     location     '/etc/venafi'
-#     devicename   'devicename' 
-#     action :run
-# end
-
 venafihelper node['venafi-helper-httpd']['common_name'] do
   tpp_username     node['venafi-helper-httpd']['username']
   tpp_password     node['venafi-helper-httpd']['password']

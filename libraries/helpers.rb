@@ -25,7 +25,7 @@ module VenafiCookbook
     def enroll(apikey:, zone:, cert_path:, key_path:, chain_path:, common_name:, id_path:, tpp_username:, tpp_password:, token:, tpp_url:, instance:, app_info:, tls_address:)
       cmd = "#{venafi_install_path} enroll -no-prompt"
       cmd << " -k '#{apikey}'" if apikey
-      cmd << " -tpp-user '#{tpp_username}' -tpp-password '#{tpp_password}'" if !token
+      cmd << " -tpp-user '#{tpp_username}' -tpp-password '#{tpp_password}'" if token
       cmd << " -t '#{token}'" if token
       cmd << " -u '#{tpp_url}'" if tpp_url
       cmd << " -z '#{zone}'" if zone
@@ -41,7 +41,7 @@ module VenafiCookbook
     def renew(apikey:, zone:, cert_path:, key_path:, chain_path:, common_name:, id_path:, tpp_username:, tpp_password:, token:, tpp_url:)
       cmd = "#{venafi_install_path} renew -no-prompt"
       cmd << " -k '#{apikey}'" if apikey
-      cmd << " -tpp-user '#{tpp_username}' -tpp-password '#{tpp_password}'" if !token
+      cmd << " -tpp-user '#{tpp_username}' -tpp-password '#{tpp_password}'" if token
       cmd << " -t '#{token}'" if token
       cmd << " -u '#{tpp_url}'" if tpp_url
       cmd << " -z '#{zone}'" if zone

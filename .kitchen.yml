@@ -41,100 +41,100 @@ suites:
         tls_address: '33.33.33.33:443'
         app_name: 'app_name'
         renew_threshold: 1
-  - name: http-cloud
-    driver_config:
-      network:
-      - ["forwarded_port", {guest: 80, host: 10080, host_ip: "127.0.0.1"}]
-      - ["forwarded_port", {guest: 443, host: 10443, host_ip: "127.0.0.1"}]
-    run_list:
-      - recipe[venafi-helper-httpd::default]
-    verifier:
-      inspec_tests:
-        - test/integration/default
-    attributes:
-      venafi-helper-httpd:
-        apikey: "<%= ENV['VENAFI_APIKEY'] %>"
-        zone: '582d5560-a9a7-11ea-8a4f-3f9fa45442b2'
-        common_name: 'test.indellient.com'
-        location: '/etc/venafi'
-        renew_threshold: 15
-  - name: nginx-tpp
-    driver_config:
-      network:
-      - ["forwarded_port", {guest: 80, host: 8080, host_ip: "127.0.0.1"}]
-      - ["forwarded_port", {guest: 443, host: 8443, host_ip: "127.0.0.1"}]
-    run_list:
-      - recipe[venafi-helper-nginx::default]
-    verifier:
-      inspec_tests:
-        - test/integration/default
-    attributes:
-      venafi-helper-nginx:
-        url: 'https://venafi-ecosystem-tpp.cld.sr/vedsdk/'
-        username: "<%= ENV['VENAFI_USERNAME'] %>"
-        password: "<%= ENV['VENAFI_PASSWORD'] %>"
-        token: "<%= ENV['VENAFI_TOKEN'] %>"
-        zone: 'Venafi Partners\Indellient\Infra'
-        common_name: 'test.example.com'
-        location: '/etc/venafi'
-        app_info: 'test'
-        tls_address: '33.33.33.33:443'
-        app_name: 'app_name'
-        renew_threshold: 1
-  - name: nginx-cloud
-    driver_config:
-      network:
-      - ["forwarded_port", {guest: 80, host: 10080, host_ip: "127.0.0.1"}]
-      - ["forwarded_port", {guest: 443, host: 10443, host_ip: "127.0.0.1"}]
-    run_list:
-      - recipe[venafi-helper-nginx::default]
-    verifier:
-      inspec_tests:
-        - test/integration/default
-    attributes:
-      venafi-helper-nginx:
-        apikey: "<%= ENV['VENAFI_APIKEY'] %>"
-        zone: '582d5560-a9a7-11ea-8a4f-3f9fa45442b2'
-        common_name: 'test.indellient.com'
-        location: '/etc/venafi'
-        renew_threshold: 15
-  - name: tomcat-tpp
-    driver_config:
-      network:
-      - ["forwarded_port", {guest: 80, host: 8080, host_ip: "127.0.0.1"}]
-      - ["forwarded_port", {guest: 443, host: 8443, host_ip: "127.0.0.1"}]
-    run_list:
-      - recipe[venafi-helper-tomcat::default]
-    verifier:
-      inspec_tests:
-        - test/integration/default
-    attributes:
-      venafi-helper-tomcat:
-        url: 'https://venafi-ecosystem-tpp.cld.sr/vedsdk/'
-        username: "<%= ENV['VENAFI_USERNAME'] %>"
-        password: "<%= ENV['VENAFI_PASSWORD'] %>"
-        token: "<%= ENV['VENAFI_TOKEN'] %>"
-        zone: 'Venafi Partners\Indellient\Infra'
-        common_name: 'test.example.com'
-        location: '/etc/venafi'
-        app_info: 'test'
-        tls_address: '33.33.33.33:443'
-        app_name: 'app_name'
-        renew_threshold: 1
-  - name: tomcat-cloud
-    driver_config:
-      network:
-      - ["forwarded_port", {guest: 80, host: 10080, host_ip: "127.0.0.1"}]
-      - ["forwarded_port", {guest: 443, host: 10443, host_ip: "127.0.0.1"}]
-    run_list:
-      - recipe[venafi-helper-tomcat::default]
-    verifier:
-      inspec_tests:
-        - test/integration/default
-    attributes:
-      venafi-helper-tomcat:
-        apikey: "<%= ENV['VENAFI_APIKEY'] %>"
-        zone: '582d5560-a9a7-11ea-8a4f-3f9fa45442b2'
-        common_name: 'test.indellient.com'
-        location: '/etc/venafi'
-        renew_threshold: 15
+  # - name: http-cloud
+  #   driver_config:
+  #     network:
+  #     - ["forwarded_port", {guest: 80, host: 10080, host_ip: "127.0.0.1"}]
+  #     - ["forwarded_port", {guest: 443, host: 10443, host_ip: "127.0.0.1"}]
+  #   run_list:
+  #     - recipe[venafi-helper-httpd::default]
+  #   verifier:
+  #     inspec_tests:
+  #       - test/integration/default
+  #   attributes:
+  #     venafi-helper-httpd:
+  #       apikey: "<%= ENV['VENAFI_APIKEY'] %>"
+  #       zone: '582d5560-a9a7-11ea-8a4f-3f9fa45442b2'
+  #       common_name: 'test.indellient.com'
+  #       location: '/etc/venafi'
+  #       renew_threshold: 15
+  # - name: nginx-tpp
+  #   driver_config:
+  #     network:
+  #     - ["forwarded_port", {guest: 80, host: 8080, host_ip: "127.0.0.1"}]
+  #     - ["forwarded_port", {guest: 443, host: 8443, host_ip: "127.0.0.1"}]
+  #   run_list:
+  #     - recipe[venafi-helper-nginx::default]
+  #   verifier:
+  #     inspec_tests:
+  #       - test/integration/default
+  #   attributes:
+  #     venafi-helper-nginx:
+  #       url: 'https://venafi-ecosystem-tpp.cld.sr/vedsdk/'
+  #       username: "<%= ENV['VENAFI_USERNAME'] %>"
+  #       password: "<%= ENV['VENAFI_PASSWORD'] %>"
+  #       token: "<%= ENV['VENAFI_TOKEN'] %>"
+  #       zone: 'Venafi Partners\Indellient\Infra'
+  #       common_name: 'test.example.com'
+  #       location: '/etc/venafi'
+  #       app_info: 'test'
+  #       tls_address: '33.33.33.33:443'
+  #       app_name: 'app_name'
+  #       renew_threshold: 1
+  # - name: nginx-cloud
+  #   driver_config:
+  #     network:
+  #     - ["forwarded_port", {guest: 80, host: 10080, host_ip: "127.0.0.1"}]
+  #     - ["forwarded_port", {guest: 443, host: 10443, host_ip: "127.0.0.1"}]
+  #   run_list:
+  #     - recipe[venafi-helper-nginx::default]
+  #   verifier:
+  #     inspec_tests:
+  #       - test/integration/default
+  #   attributes:
+  #     venafi-helper-nginx:
+  #       apikey: "<%= ENV['VENAFI_APIKEY'] %>"
+  #       zone: '582d5560-a9a7-11ea-8a4f-3f9fa45442b2'
+  #       common_name: 'test.indellient.com'
+  #       location: '/etc/venafi'
+  #       renew_threshold: 15
+  # - name: tomcat-tpp
+  #   driver_config:
+  #     network:
+  #     - ["forwarded_port", {guest: 80, host: 8080, host_ip: "127.0.0.1"}]
+  #     - ["forwarded_port", {guest: 443, host: 8443, host_ip: "127.0.0.1"}]
+  #   run_list:
+  #     - recipe[venafi-helper-tomcat::default]
+  #   verifier:
+  #     inspec_tests:
+  #       - test/integration/default
+  #   attributes:
+  #     venafi-helper-tomcat:
+  #       url: 'https://venafi-ecosystem-tpp.cld.sr/vedsdk/'
+  #       username: "<%= ENV['VENAFI_USERNAME'] %>"
+  #       password: "<%= ENV['VENAFI_PASSWORD'] %>"
+  #       token: "<%= ENV['VENAFI_TOKEN'] %>"
+  #       zone: 'Venafi Partners\Indellient\Infra'
+  #       common_name: 'test.example.com'
+  #       location: '/etc/venafi'
+  #       app_info: 'test'
+  #       tls_address: '33.33.33.33:443'
+  #       app_name: 'app_name'
+  #       renew_threshold: 1
+  # - name: tomcat-cloud
+  #   driver_config:
+  #     network:
+  #     - ["forwarded_port", {guest: 80, host: 10080, host_ip: "127.0.0.1"}]
+  #     - ["forwarded_port", {guest: 443, host: 10443, host_ip: "127.0.0.1"}]
+  #   run_list:
+  #     - recipe[venafi-helper-tomcat::default]
+  #   verifier:
+  #     inspec_tests:
+  #       - test/integration/default
+  #   attributes:
+  #     venafi-helper-tomcat:
+  #       apikey: "<%= ENV['VENAFI_APIKEY'] %>"
+  #       zone: '582d5560-a9a7-11ea-8a4f-3f9fa45442b2'
+  #       common_name: 'test.indellient.com'
+  #       location: '/etc/venafi'
+  #       renew_threshold: 15

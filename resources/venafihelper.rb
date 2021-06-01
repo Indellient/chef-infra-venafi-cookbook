@@ -33,7 +33,7 @@ action :run do
   chain_path = "#{location}/#{chain_file}"
   id_path = "#{location}/#{id_file}"
 
-  if !instance.nil? && !new_resource.app_info.nil? && !new_resource.tls_address.nil? && !apikey.nil?
+  if !instance.nil? && !new_resource.app_info.nil? && !new_resource.tls_address.nil? && !new_resource.apikey.nil?
     ::Chef::Application.fatal!('Device Registration not supported on Venafi Cloud')
   end
 

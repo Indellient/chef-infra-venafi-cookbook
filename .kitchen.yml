@@ -33,6 +33,7 @@ suites:
         url: 'https://venafi-ecosystem-tpp.cld.sr/vedsdk/'
         username: "<%= ENV['VENAFI_USERNAME'] %>"
         password: "<%= ENV['VENAFI_PASSWORD'] %>"
+        token: "<%= ENV['VENAFI_TOKEN'] %>"
         zone: 'Venafi Partners\Indellient\Infra'
         common_name: 'test.example.com'
         location: '/etc/venafi'
@@ -72,6 +73,7 @@ suites:
         url: 'https://venafi-ecosystem-tpp.cld.sr/vedsdk/'
         username: "<%= ENV['VENAFI_USERNAME'] %>"
         password: "<%= ENV['VENAFI_PASSWORD'] %>"
+        token: "<%= ENV['VENAFI_TOKEN'] %>"
         zone: 'Venafi Partners\Indellient\Infra'
         common_name: 'test.example.com'
         location: '/etc/venafi'
@@ -111,6 +113,7 @@ suites:
         url: 'https://venafi-ecosystem-tpp.cld.sr/vedsdk/'
         username: "<%= ENV['VENAFI_USERNAME'] %>"
         password: "<%= ENV['VENAFI_PASSWORD'] %>"
+        token: "<%= ENV['VENAFI_TOKEN'] %>"
         zone: 'Venafi Partners\Indellient\Infra'
         common_name: 'test.example.com'
         location: '/etc/venafi'

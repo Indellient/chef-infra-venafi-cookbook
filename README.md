@@ -11,8 +11,9 @@ In order to use the venafi-helper you need to utilize the custom resource and ca
 - `common_name`: The common name of your certificate (e.g. "bla.example.com")
   - name property
 - `tpp_url`: The URL you use to authenticate with the SDK
-- `tpp_username`: The username you use to authenticate with the SDK
-- `tpp_password`: The password you use to authenticate with the SDK
+- `token`: The token you use to authenticate with the SDK
+- `tpp_username`: The username you use to authenticate with the SDK (deprecated)
+- `tpp_password`: The password you use to authenticate with the SDK (deprecated)
 - `zone`: The zone of your certificate (e.g. "Certificates\\\\Bla")
 - `location`: Where you want to write the certificates to disk
 - `device_name`: Name of Device you want to create in Venafi Server

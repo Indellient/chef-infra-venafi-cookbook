@@ -2,6 +2,7 @@ resource_name :venafihelper
 
 property :common_name, String, name_property: true
 property :tpp_url, String
+property :token, String
 property :tpp_password, String
 property :tpp_username, String
 property :zone, String
@@ -55,6 +56,7 @@ action :run do
       id_path: id_path,
       tpp_username: new_resource.tpp_username,
       tpp_password: new_resource.tpp_password,
+      token: new_resource.token,
       tpp_url: new_resource.tpp_url,
       instance: instance,
       app_info: new_resource.app_info,
@@ -75,6 +77,7 @@ action :run do
       id_path: id_path,
       tpp_username: new_resource.tpp_username,
       tpp_password: new_resource.tpp_password,
+      token: new_resource.token,
       tpp_url: new_resource.tpp_url
     )
     sensitive true

@@ -22,10 +22,12 @@ module VenafiCookbook
       '/usr/local/bin/vcert'
     end
 
-    def enroll(apikey:, zone:, cert_path:, key_path:, chain_path:, common_name:, id_path:, tpp_username:, tpp_password:, tpp_url:, instance:, app_info:, tls_address:)
+    def enroll(apikey:, zone:, cert_path:, key_path:, chain_path:, common_name:, id_path:, tpp_username:, tpp_password:, token:, tpp_url:, instance:, app_info:, tls_address:)
       cmd = "#{venafi_install_path} enroll -no-prompt"
       cmd << " -k '#{apikey}'" if apikey
-      cmd << " -tpp-user '#{tpp_username}' -tpp-password '#{tpp_password}' -u '#{tpp_url}'" if tpp_url
+      cmd << " -tpp-user '#{tpp_username}' -tpp-password '#{tpp_password}'" if !token
+      cmd << " -t '#{token}'" if token
+      cmd << " -u '#{tpp_url}'" if tpp_url
       cmd << " -z '#{zone}'" if zone
       cmd << " -cert-file '#{cert_path}'" if cert_path
       cmd << " -key-file '#{key_path}'" if key_path
@@ -36,10 +38,12 @@ module VenafiCookbook
       cmd
     end
 
-    def renew(apikey:, zone:, cert_path:, key_path:, chain_path:, common_name:, id_path:, tpp_username:, tpp_password:, tpp_url:)
+    def renew(apikey:, zone:, cert_path:, key_path:, chain_path:, common_name:, id_path:, tpp_username:, tpp_password:, token:, tpp_url:)
       cmd = "#{venafi_install_path} renew -no-prompt"
       cmd << " -k '#{apikey}'" if apikey
-      cmd << " -tpp-user '#{tpp_username}' -tpp-password '#{tpp_password}' -u '#{tpp_url}'" if tpp_url
+      cmd << " -tpp-user '#{tpp_username}' -tpp-password '#{tpp_password}'" if !token
+      cmd << " -t '#{token}'" if token
+      cmd << " -u '#{tpp_url}'" if tpp_url
       cmd << " -z '#{zone}'" if zone
       cmd << " -cert-file '#{cert_path}'" if cert_path
       cmd << " -key-file '#{key_path}'" if key_path

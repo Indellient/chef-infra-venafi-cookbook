@@ -3,6 +3,7 @@ include_recipe 'venafi-helper::default'
 venafihelper node['venafi-helper-tomcat']['common_name'] do
   tpp_username     node['venafi-helper-tomcat']['username']
   tpp_password     node['venafi-helper-tomcat']['password']
+  token            node['venafi-helper-tomcat']['token']
   tpp_url          node['venafi-helper-tomcat']['url']
   apikey           node['venafi-helper-tomcat']['apikey']
   zone             node['venafi-helper-tomcat']['zone']

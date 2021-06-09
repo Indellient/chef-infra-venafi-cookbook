@@ -32,8 +32,9 @@ action :run do
   key_path = "#{location}/#{key_file}"
   chain_path = "#{location}/#{chain_file}"
   id_path = "#{location}/#{id_file}"
+  app_info = "Indellient-ChefInfra-Helper"
 
-  if !instance.nil? && !new_resource.app_info.nil? && !new_resource.tls_address.nil? && !new_resource.apikey.nil?
+  if !instance.nil? && !new_resource.tls_address.nil? && !new_resource.apikey.nil?
     ::Chef::Application.fatal!('Device Registration not supported on Venafi Cloud')
   end
 
@@ -59,7 +60,7 @@ action :run do
       token: new_resource.token,
       tpp_url: new_resource.tpp_url,
       instance: instance,
-      app_info: new_resource.app_info,
+      app_info: app_info,
       tls_address: new_resource.tls_address
     )
     sensitive true

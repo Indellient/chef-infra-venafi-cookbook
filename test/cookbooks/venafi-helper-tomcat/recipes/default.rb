@@ -9,7 +9,6 @@ venafihelper node['venafi-helper-tomcat']['common_name'] do
   zone             node['venafi-helper-tomcat']['zone']
   location         node['venafi-helper-tomcat']['location']
   app_name         node['venafi-helper-tomcat']['app_name']
-  app_info         node['venafi-helper-tomcat']['app_info']
   tls_address      node['venafi-helper-tomcat']['tls_address']
   renew_threshold  node['venafi-helper-tomcat']['renew_threshold']
   action :run

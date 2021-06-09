@@ -3,6 +3,7 @@ include_recipe 'venafi-helper::default'
 venafihelper node['venafi-helper-httpd']['common_name'] do
   tpp_username     node['venafi-helper-httpd']['username']
   tpp_password     node['venafi-helper-httpd']['password']
+  token            node['venafi-helper-httpd']['token']
   tpp_url          node['venafi-helper-httpd']['url']
   apikey           node['venafi-helper-httpd']['apikey']
   zone             node['venafi-helper-httpd']['zone']

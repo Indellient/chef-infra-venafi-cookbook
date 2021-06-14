@@ -21,7 +21,6 @@ In order to use the venafi-helper you need to utilize the custom resource and ca
 - `app_name`:
 - `apikey`: API used to communicate with Venafi Cloud
 - `id_path`:
-- `app_info`:
 - `tls_address`:
 - `renew_threshold`:
 

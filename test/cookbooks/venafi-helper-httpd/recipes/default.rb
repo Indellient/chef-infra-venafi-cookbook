@@ -9,7 +9,6 @@ venafihelper node['venafi-helper-httpd']['common_name'] do
   zone             node['venafi-helper-httpd']['zone']
   location         node['venafi-helper-httpd']['location']
   app_name         node['venafi-helper-httpd']['app_name']
-  app_info         node['venafi-helper-httpd']['app_info']
   tls_address      node['venafi-helper-httpd']['tls_address']
   renew_threshold  node['venafi-helper-httpd']['renew_threshold']
   action :run

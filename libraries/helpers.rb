@@ -3,11 +3,11 @@ module VenafiCookbook
     extend Chef::Mixin::ShellOut
 
     def version
-      '4.9.6'
+      '4.19.0'
     end
 
-    def what_is_this
-      '+895'
+    def version_specific
+      '4.19.0'
     end
 
     def platform
@@ -15,7 +15,7 @@ module VenafiCookbook
     end
 
     def venafi_download_url
-      "https://github.com/Venafi/vcert/releases/download/v#{version}/vcert-v4.9.6#{what_is_this}_#{platform}"
+      "https://github.com/Venafi/vcert/releases/download/v#{version}/vcert-v#{version_specific}_#{platform}"
     end
 
     def venafi_install_path

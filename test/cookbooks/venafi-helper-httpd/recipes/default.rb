@@ -11,14 +11,15 @@ venafihelper node['venafi-helper-httpd']['common_name'] do
   app_name         node['venafi-helper-httpd']['app_name']
   tls_address      node['venafi-helper-httpd']['tls_address']
   renew_threshold  node['venafi-helper-httpd']['renew_threshold']
+  vcert_download_url 'https://github.com/Venafi/vcert/releases/download/v4.18.2/vcert_v4.18.2_linux.zip'
   action :run
 end
 
-package "httpd" do
+package 'httpd' do
   action [:install]
 end
 
-package "mod_ssl" do
+package 'mod_ssl' do
   action [:install]
 end
 
@@ -30,25 +31,25 @@ remote_directory '/var/www/html/' do
   action :create
 end
 
-template "/etc/httpd/conf.d/ssl.conf" do
-  source "ssl.conf.erb"
-  mode 0644
-  owner "root"
-  group "root"
+template '/etc/httpd/conf.d/ssl.conf' do
+  source 'ssl.conf.erb'
+  mode '644'
+  owner 'root'
+  group 'root'
   variables(
-      :sslcertificate => "/etc/venafi/#{node['venafi-helper-httpd']['common_name']}.cert",
-      :sslkey => "/etc/venafi/#{node['venafi-helper-httpd']['common_name']}.key",
-      :sslchainfile => "/etc/venafi/#{node['venafi-helper-httpd']['common_name']}.chain"
+      sslcertificate: "/etc/venafi/#{node['venafi-helper-httpd']['common_name']}.cert",
+      sslkey: "/etc/venafi/#{node['venafi-helper-httpd']['common_name']}.key",
+      sslchainfile: "/etc/venafi/#{node['venafi-helper-httpd']['common_name']}.chain"
       # :servername => "orange.example.com"
-  )
+    )
 end
 
 # change selinux security context for ssl certificates
-execute "change_for_selinux" do
-  command "chcon -Rv --type=httpd_sys_content_t /etc/venafi/"
+execute 'change_for_selinux' do
+  command 'chcon -Rv --type=httpd_sys_content_t /etc/venafi/'
   action :run
 end
 
-service "httpd" do
-  action [:enable,:start]
+service 'httpd' do
+  action [:enable, :start]
 end

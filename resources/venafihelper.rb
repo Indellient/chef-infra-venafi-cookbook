@@ -87,7 +87,7 @@ action :run do
       app_info: app_info,
       tls_address: new_resource.tls_address
     )
-    sensitive false
+    sensitive true
     not_if { ::File.exist?(cert_path) && ::File.exist?(key_path) && ::File.exist?(chain_path) }
   end
 
@@ -105,7 +105,7 @@ action :run do
       token: new_resource.token,
       tpp_url: new_resource.tpp_url
     )
-    sensitive false
+    sensitive true
     only_if { should_renew?(cert_path: cert_path, renew_threshold: new_resource.renew_threshold) }
   end
 end

@@ -23,30 +23,30 @@ if platform_family?('debian')
 end
 
 package 'nginx' do
-    action :install
+  action :install
 end
 
-template "/etc/nginx/nginx.conf" do
-     source "nginx.conf.erb"
-     variables(
-      :sslcertificate => "/etc/venafi/#{node['venafi-helper-nginx']['common_name']}.cert",
-      :sslkey => "/etc/venafi/#{node['venafi-helper-nginx']['common_name']}.key",
-     )
+template '/etc/nginx/nginx.conf' do
+  source 'nginx.conf.erb'
+  variables(
+   sslcertificate: "/etc/venafi/#{node['venafi-helper-nginx']['common_name']}.cert",
+   sslkey: "/etc/venafi/#{node['venafi-helper-nginx']['common_name']}.key"
+ )
 end
 
-directory "usr/share/nginx/html/" do
-    recursive true
-    action :delete
+directory 'usr/share/nginx/html/' do
+  recursive true
+  action :delete
 end
 
 remote_directory 'usr/share/nginx/html/' do
-    source 'public'
-    owner 'root'
-    group 'root'
-    mode '0755'
-    action :create
+  source 'public'
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
 end
 
 service 'nginx' do
-    action [ :enable, :start ]
+  action [ :enable, :start ]
 end

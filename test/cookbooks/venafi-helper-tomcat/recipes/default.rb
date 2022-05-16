@@ -17,41 +17,41 @@ end
 if platform_family?('rhel')
   package 'epel-release'
 end
-  
+
 if platform_family?('debian')
   apt_update 'update'
 end
 
 package 'tomcat' do
-    action :install
+  action :install
 end
-  
+
 package 'tomcat-native' do
   action :install
 end
-  
+
 template '/usr/share/tomcat/conf/server.xml' do
   source 'helloworld_server.xml.erb'
   owner 'root'
   group 'root'
   mode '0644'
   variables(
-      :sslcertificate => "/etc/venafi/#{node['venafi-helper-tomcat']['common_name']}.cert",
-      :sslkey => "/etc/venafi/#{node['venafi-helper-tomcat']['common_name']}.key",
-  )
+      sslcertificate: "/etc/venafi/#{node['venafi-helper-tomcat']['common_name']}.cert",
+      sslkey: "/etc/venafi/#{node['venafi-helper-tomcat']['common_name']}.key"
+    )
 end
 
-directory "/usr/share/tomcat/webapps/ROOT/" do
-    recursive true
-    action :delete
+directory '/usr/share/tomcat/webapps/ROOT/' do
+  recursive true
+  action :delete
 end
 
 remote_directory '/usr/share/tomcat/webapps/ROOT/' do
-    source 'public'
-    owner 'root'
-    group 'root'
-    mode '0755'
-    action :create
+  source 'public'
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
 end
 
 directory '/etc/venafi' do
@@ -59,7 +59,7 @@ directory '/etc/venafi' do
   owner 'tomcat'
   group 'tomcat'
 end
-  
+
 service 'tomcat' do
-    action [ :enable, :start ]
+  action [ :enable, :start ]
 end

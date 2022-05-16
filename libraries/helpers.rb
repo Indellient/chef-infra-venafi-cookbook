@@ -2,20 +2,17 @@ module VenafiCookbook
   module Helper
     extend Chef::Mixin::ShellOut
 
-    def version
-      '4.9.6'
+    def tag_name
+      require 'json'
+      json = JSON.parse Chef::HTTP.new('https://api.github.com').get('/repos/Venafi/vcert/releases/latest')
+      json['tag_name']
     end
 
-    def what_is_this
-      '+895'
-    end
+    def venafi_download_url(version, platform)
+      version = tag_name if version.downcase.eql?('latest')
+      version.prepend('v') unless version.start_with?('v')
 
-    def platform
-      'linux86'
-    end
-
-    def venafi_download_url
-      "https://github.com/Venafi/vcert/releases/download/v#{version}/vcert-v4.9.6#{what_is_this}_#{platform}"
+      "https://github.com/Venafi/vcert/releases/download/#{version}/vcert_#{version}_#{platform}.zip"
     end
 
     def venafi_install_path
@@ -25,7 +22,7 @@ module VenafiCookbook
     def enroll(apikey:, zone:, cert_path:, key_path:, chain_path:, common_name:, id_path:, tpp_username:, tpp_password:, token:, tpp_url:, instance:, app_info:, tls_address:)
       cmd = "#{venafi_install_path} enroll -no-prompt"
       cmd << " -k '#{apikey}'" if apikey
-      cmd << " -tpp-user '#{tpp_username}' -tpp-password '#{tpp_password}'" if !token
+      cmd << " -tpp-user '#{tpp_username}' -tpp-password '#{tpp_password}'" unless token
       cmd << " -t '#{token}'" if token
       cmd << " -u '#{tpp_url}'" if tpp_url
       cmd << " -z '#{zone}'" if zone
@@ -38,10 +35,10 @@ module VenafiCookbook
       cmd
     end
 
-    def renew(apikey:, zone:, cert_path:, key_path:, chain_path:, common_name:, id_path:, tpp_username:, tpp_password:, token:, tpp_url:)
+    def renew(apikey:, zone:, cert_path:, key_path:, chain_path:, _common_name:, id_path:, tpp_username:, tpp_password:, token:, tpp_url:)
       cmd = "#{venafi_install_path} renew -no-prompt"
       cmd << " -k '#{apikey}'" if apikey
-      cmd << " -tpp-user '#{tpp_username}' -tpp-password '#{tpp_password}'" if !token
+      cmd << " -tpp-user '#{tpp_username}' -tpp-password '#{tpp_password}'" unless token
       cmd << " -t '#{token}'" if token
       cmd << " -u '#{tpp_url}'" if tpp_url
       cmd << " -z '#{zone}'" if zone
@@ -63,4 +60,4 @@ module VenafiCookbook
 end
 
 Chef::Resource.send(:include, VenafiCookbook::Helper)
-Chef::Recipe.send(:include, VenafiCookbook::Helper)
+Chef::DSL::Recipe.send(:include, VenafiCookbook::Helper)

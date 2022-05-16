@@ -1,4 +1,6 @@
 resource_name :venafihelper
+provides :venafihelper
+unified_mode true
 
 property :common_name, String, name_property: true
 property :tpp_url, String
@@ -7,13 +9,15 @@ property :tpp_password, String
 property :tpp_username, String
 property :zone, String
 property :location, String
-property :device_name, String, default: node['fqdn']
+property :device_name, String, default: lazy { node['fqdn'] }
 property :app_name, String
 property :apikey, String
 property :id_path, String
 property :app_info, String
 property :tls_address, String
 property :renew_threshold, Integer
+property :vcert_version, String, default: 'latest'
+property :vcert_download_url, String
 
 action :run do
   app_name = new_resource.app_name
@@ -32,16 +36,36 @@ action :run do
   key_path = "#{location}/#{key_file}"
   chain_path = "#{location}/#{chain_file}"
   id_path = "#{location}/#{id_file}"
-  app_info = "Indellient-ChefInfra-Helper"
+  app_info = 'Indellient-ChefInfra-Helper'
 
   if !instance.nil? && !new_resource.tls_address.nil? && !new_resource.apikey.nil?
     ::Chef::Application.fatal!('Device Registration not supported on Venafi Cloud')
   end
 
-  remote_file venafi_install_path do
-    source venafi_download_url
+  vcert_version = new_resource.vcert_version
+  vcert_platform =  'linux'
+  vcert_platform += '86' unless node['kernel']['machine'].eql? 'x86_64'
+
+  vcert_download_url = new_resource.vcert_download_url || venafi_download_url(vcert_version, vcert_platform)
+
+  remote_file "#{Chef::Config['file_cache_path']}/#{::File.basename(vcert_download_url)}" do
+    source vcert_download_url
     mode '0755'
     action :create
+    notifies :run, 'execute[extract]', :immediately
+  end
+
+  package 'unzip'
+
+  execute 'extract' do
+    command "unzip -o #{Chef::Config['file_cache_path']}/#{::File.basename(vcert_download_url)} -d #{Chef::Config['file_cache_path']}"
+    action :nothing
+    notifies :run, 'execute[copy]', :immediately
+  end
+
+  execute 'copy' do
+    command "cp #{Chef::Config['file_cache_path']}/vcert /usr/local/bin"
+    action :nothing
   end
 
   directory location
